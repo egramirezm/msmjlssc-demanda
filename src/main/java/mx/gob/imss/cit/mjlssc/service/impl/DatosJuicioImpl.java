@@ -31,6 +31,7 @@ public class DatosJuicioImpl implements DatosJuicioService {
 	@Override
 	public ResponseEntity<?> saveDatosJuicio(DatosJuicioDto datosJuicio) {
 		log.info("Inicio DelegacionService getDelegaciones");
+		
 		try {
 			// ejemplo projection
 			//SsccDelegacionView delegacionProjection = ssccDelegacionRepository.findByRefAbreviacion("DFS",SsccDelegacionView.class);
