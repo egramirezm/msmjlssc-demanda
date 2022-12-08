@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.model.entity.DatosJuicioDto;
-import mx.gob.imss.cit.mjlssc.service.DatosJuicioService;
+import mx.gob.imss.cit.mjlssc.model.entity.CardRepresentanteDto;
+import mx.gob.imss.cit.mjlssc.service.CardRepresentanteService;
 
 /**
  * @author
@@ -17,20 +17,15 @@ import mx.gob.imss.cit.mjlssc.service.DatosJuicioService;
  */
 @Log4j2
 @Service
-public class DatosJuicioImpl implements DatosJuicioService {
+public class CardRepresentanteImpl implements CardRepresentanteService {
 
-//	@Autowired
-//	private DelegacionMapper delegacionMapper;
-//
-//	@Autowired
-//	private SsccDelegacionRepository ssccDelegacionRepository;
 
 	/*
 	 * solo prueba revisar y definir uso de mappers y demas
 	 */
 	@Override
-	public ResponseEntity<?> saveDatosJuicio(DatosJuicioDto datosJuicio) {
-		log.info("Inicio DelegacionService getDelegaciones");
+	public ResponseEntity<?> save(CardRepresentanteDto cardRepresentanteDto  ) {
+		log.info("Inicio CartAbogadoResponsableImpl");
 		
 		try {
 			// ejemplo projection

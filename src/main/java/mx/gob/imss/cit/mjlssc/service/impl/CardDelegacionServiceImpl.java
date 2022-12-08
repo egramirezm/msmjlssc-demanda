@@ -16,7 +16,7 @@ import mx.gob.imss.cit.mjlssc.model.assembler.DelegacionMapper;
 import mx.gob.imss.cit.mjlssc.model.entity.SsccDelegacionDto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccDelegacion;
 import mx.gob.imss.cit.mjlssc.persistence.repository.SsccDelegacionRepository;
-import mx.gob.imss.cit.mjlssc.service.DelegacionService;
+import mx.gob.imss.cit.mjlssc.service.CardDelegacionService;
 
 /**
  * @author
@@ -24,7 +24,7 @@ import mx.gob.imss.cit.mjlssc.service.DelegacionService;
  */
 @Log4j2
 @Service
-public class DelegacionServiceImpl implements DelegacionService {
+public class CardDelegacionServiceImpl implements CardDelegacionService {
 
 	@Autowired
 	private DelegacionMapper delegacionMapper;

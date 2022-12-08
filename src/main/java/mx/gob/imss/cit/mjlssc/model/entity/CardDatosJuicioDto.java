@@ -14,7 +14,7 @@ import mx.gob.imss.cit.mjlssc.persistence.entity.SsccDelegacion;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DatosJuicioDto implements Serializable {
+public class CardDatosJuicioDto implements Serializable {
 
 	/**
 	 * 
