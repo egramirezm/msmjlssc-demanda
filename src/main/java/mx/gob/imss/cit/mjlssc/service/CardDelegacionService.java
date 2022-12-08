@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
  * @author
  *
  */
-public interface DelegacionService {
+public interface CardDelegacionService {
 
 	ResponseEntity<?> getDelegaciones();
 
