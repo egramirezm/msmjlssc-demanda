@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.service.CardDelegacionService;
+import mx.gob.imss.cit.mjlssc.service.DelegacionService;
 
 /***
  * 
@@ -23,7 +23,7 @@ import mx.gob.imss.cit.mjlssc.service.CardDelegacionService;
 public class TestController {
 
 	@Autowired
-	private CardDelegacionService delegacionService;
+	private DelegacionService delegacionService;
 
 	@GetMapping("/hola")
 	public ResponseEntity<?> prueba() {

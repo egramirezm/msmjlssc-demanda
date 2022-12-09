@@ -3,13 +3,15 @@
  */
 package mx.gob.imss.cit.mjlssc.service.impl;
 
+import javax.transaction.Transactional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.model.entity.CardAbogadoResponsableDto;
-import mx.gob.imss.cit.mjlssc.service.CardAbogadoResponsableService;
+import mx.gob.imss.cit.mjlssc.model.request.PersonaRequestDto;
+import mx.gob.imss.cit.mjlssc.service.ActorPrincipalService;
 
 /**
  * @author
@@ -17,15 +19,21 @@ import mx.gob.imss.cit.mjlssc.service.CardAbogadoResponsableService;
  */
 @Log4j2
 @Service
-public class CartAbogadoResponsableImpl implements CardAbogadoResponsableService {
+public class ActorPrincipalImpl implements ActorPrincipalService {
 
+//	@Autowired
+//	private DelegacionMapper delegacionMapper;
+//
+//	@Autowired
+//	private SsccDelegacionRepository ssccDelegacionRepository;
 
 	/*
 	 * solo prueba revisar y definir uso de mappers y demas
 	 */
 	@Override
-	public ResponseEntity<?> save(CardAbogadoResponsableDto cartAbogadoResponsableDto ) {
-		log.info("Inicio CartAbogadoResponsableImpl");
+	@Transactional
+	public ResponseEntity<?> save(PersonaRequestDto dto) {
+		log.info("---->>> Inicio saveActorPrincipal");
 		
 		try {
 			// ejemplo projection

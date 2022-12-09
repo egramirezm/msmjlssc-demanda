@@ -8,9 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.model.entity.CardAccionesReclamadasDto;
-import mx.gob.imss.cit.mjlssc.model.entity.CardDatosJuicioDto;
-import mx.gob.imss.cit.mjlssc.service.CardAccionesReclamadasService;
+import mx.gob.imss.cit.mjlssc.model.request.AbogadoResponsableDto;
+import mx.gob.imss.cit.mjlssc.service.AbogadoResponsableService;
 
 /**
  * @author
@@ -18,20 +17,15 @@ import mx.gob.imss.cit.mjlssc.service.CardAccionesReclamadasService;
  */
 @Log4j2
 @Service
-public class CardAccionesReclamadasImpl implements CardAccionesReclamadasService {
+public class AbogadoResponsableImpl implements AbogadoResponsableService {
 
-//	@Autowired
-//	private DelegacionMapper delegacionMapper;
-//
-//	@Autowired
-//	private SsccDelegacionRepository ssccDelegacionRepository;
 
 	/*
 	 * solo prueba revisar y definir uso de mappers y demas
 	 */
 	@Override
-	public ResponseEntity<?> save(CardAccionesReclamadasDto accionesReclamadasDto) {
-		log.info("Inicio DelegacionService getDelegaciones");
+	public ResponseEntity<?> save(AbogadoResponsableDto cartAbogadoResponsableDto ) {
+		log.info("Inicio CartAbogadoResponsableImpl");
 		
 		try {
 			// ejemplo projection
@@ -46,6 +40,5 @@ public class CardAccionesReclamadasImpl implements CardAccionesReclamadasService
 //		return new ResponseEntity<>(datosJuicio, HttpStatus.OK);
 		return null;
 	}
-
 
 }

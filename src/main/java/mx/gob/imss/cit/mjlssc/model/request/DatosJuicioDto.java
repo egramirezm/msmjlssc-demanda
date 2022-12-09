@@ -1,4 +1,4 @@
-package mx.gob.imss.cit.mjlssc.model.entity;
+package mx.gob.imss.cit.mjlssc.model.request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,7 +14,7 @@ import mx.gob.imss.cit.mjlssc.persistence.entity.SsccDelegacion;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardDatosJuicioDto implements Serializable {
+public class DatosJuicioDto implements Serializable {
 
 	/**
 	 * 

@@ -3,13 +3,19 @@
  */
 package mx.gob.imss.cit.mjlssc.service.impl;
 
+import java.util.ArrayList;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.model.entity.CardDatosJuicioDto;
-import mx.gob.imss.cit.mjlssc.service.CardDatosJuicioService;
+import mx.gob.imss.cit.mjlssc.model.request.PersonaRequestDto;
+import mx.gob.imss.cit.mjlssc.service.ActorPrincipalService;
+import mx.gob.imss.cit.mjlssc.service.FinadoService;
 
 /**
  * @author
@@ -17,7 +23,10 @@ import mx.gob.imss.cit.mjlssc.service.CardDatosJuicioService;
  */
 @Log4j2
 @Service
-public class CardDatosJuicioImpl implements CardDatosJuicioService {
+public class FinadoImpl implements FinadoService {
+	
+	@Autowired
+	private ActorPrincipalService actorPrincipalService;
 
 //	@Autowired
 //	private DelegacionMapper delegacionMapper;
@@ -26,13 +35,19 @@ public class CardDatosJuicioImpl implements CardDatosJuicioService {
 //	private SsccDelegacionRepository ssccDelegacionRepository;
 
 	/*
-	 * solo prueba revisar y definir uso de mappers y demas
+	 * solo es prueba, revisar y definir uso de mappers y demas
+	 */
+	/**
+	 * Save para el registro de la demanda
 	 */
 	@Override
-	public ResponseEntity<?> save(CardDatosJuicioDto datosJuicio) {
+	@Transactional
+	public ResponseEntity<?> save(ArrayList<PersonaRequestDto> lstDto) {
 		log.info("Inicio DelegacionService getDelegaciones");
 		
 		try {
+			
+//			actorPrincipalService.save(lstDto);
 			// ejemplo projection
 			//SsccDelegacionView delegacionProjection = ssccDelegacionRepository.findByRefAbreviacion("DFS",SsccDelegacionView.class);
 //			DatosJuicioDto datosJuicio = ssccDelegacionRepository.findAll();

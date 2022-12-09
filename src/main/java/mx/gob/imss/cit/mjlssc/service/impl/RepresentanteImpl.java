@@ -3,13 +3,15 @@
  */
 package mx.gob.imss.cit.mjlssc.service.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.model.entity.CardRepresentanteDto;
-import mx.gob.imss.cit.mjlssc.service.CardRepresentanteService;
+import mx.gob.imss.cit.mjlssc.model.request.RepresentanteDto;
+import mx.gob.imss.cit.mjlssc.service.RepresentanteService;
 
 /**
  * @author
@@ -17,14 +19,14 @@ import mx.gob.imss.cit.mjlssc.service.CardRepresentanteService;
  */
 @Log4j2
 @Service
-public class CardRepresentanteImpl implements CardRepresentanteService {
+public class RepresentanteImpl implements RepresentanteService {
 
 
 	/*
 	 * solo prueba revisar y definir uso de mappers y demas
 	 */
 	@Override
-	public ResponseEntity<?> save(CardRepresentanteDto cardRepresentanteDto  ) {
+	public ResponseEntity<?> save(ArrayList<RepresentanteDto> lstDto ) {
 		log.info("Inicio CartAbogadoResponsableImpl");
 		
 		try {
