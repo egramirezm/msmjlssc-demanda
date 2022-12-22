@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "mjlc_tipo_documento")
+@Table(name = "MJLC_TIPO_DOCUMENTO")
 public class MjlcTipoDocumento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

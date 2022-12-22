@@ -3,11 +3,14 @@ package mx.gob.imss.cit.mjlssc.persistence.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import mx.gob.imss.cit.mjlssc.component.DataBaseShemaConf;
+
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "SSCC_CENTRO_CONCILIACION")
+@Table(name = "SSCC_CENTRO_CONCILIACION",catalog = DataBaseShemaConf.SCHEMANML)
 public class SsccCentroConciliacion implements Serializable {
     private static final long serialVersionUID = 2450557910380588119L;
     @Id

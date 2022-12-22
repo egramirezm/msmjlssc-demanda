@@ -3,9 +3,9 @@
  */
 package mx.gob.imss.cit.mjlssc.service;
 
-import org.springframework.http.ResponseEntity;
+import java.util.List;
 
-import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
+import mx.gob.imss.cit.mjlssc.model.entity.MjltAsuntoActorDto;
 
 
 /**
@@ -14,6 +14,6 @@ import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
  */
 public interface AntecedentesService {
 
-	ResponseEntity<?> getDetalleActor(Long id);
+	List<MjltAsuntoActorDto> getDetalleActor();
 
 }

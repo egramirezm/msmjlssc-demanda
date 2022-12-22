@@ -3,14 +3,18 @@
  */
 package mx.gob.imss.cit.mjlssc.service.impl;
 
-import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
+import mx.gob.imss.cit.mjlssc.model.entity.MjltAsuntoActorDto;
+import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsuntoActor;
+import mx.gob.imss.cit.mjlssc.persistence.repository.MjltAsuntoActorRepository;
 import mx.gob.imss.cit.mjlssc.service.AntecedentesService;
+import mx.gob.imss.cit.mjlssc.utils.ObjectMapperUtils;
 
 /**
  * @author
@@ -19,22 +23,22 @@ import mx.gob.imss.cit.mjlssc.service.AntecedentesService;
 @Log4j2
 @Service
 public class AntecedentesServiceImpl implements AntecedentesService {
+	@Autowired
+	private MjltAsuntoActorRepository mjltAsuntoActorRepository;
 
-	
 	@Override
-	@Transactional
-	public ResponseEntity<?> getDetalleActor(Long id) {
+	public List<MjltAsuntoActorDto> getDetalleActor() {
 		log.info("Inicio getDetalleActor");
 
 		try {
-			
-			
+			List<MjltAsuntoActor> dboList = mjltAsuntoActorRepository.findAll();
+			if (!dboList.isEmpty()) {
+				return ObjectMapperUtils.mapAll(dboList, MjltAsuntoActorDto.class);
+			}
 		} catch (Exception e) {
-			log.error("Exception DatosJuicioImpl saveDatosJuicio", e);
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			log.error(e.getMessage());
 		}
-//		return new ResponseEntity<>(datosJuicio, HttpStatus.OK);
-		return null;
+		return  Collections.emptyList();
 	}
 
 }

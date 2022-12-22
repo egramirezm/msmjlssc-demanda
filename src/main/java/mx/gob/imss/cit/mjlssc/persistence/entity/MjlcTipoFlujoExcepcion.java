@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "mjlc_tipo_flujo_excepcion")
+@Table(name = "MJLC_TIPO_FLUJO_EXCEPCION")
 public class MjlcTipoFlujoExcepcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

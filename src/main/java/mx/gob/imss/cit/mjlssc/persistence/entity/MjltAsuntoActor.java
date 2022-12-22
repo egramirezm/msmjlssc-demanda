@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "mjlt_asunto_actor")
+@Table(name = "MJLT_ASUNTO_ACTOR")
 public class MjltAsuntoActor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
