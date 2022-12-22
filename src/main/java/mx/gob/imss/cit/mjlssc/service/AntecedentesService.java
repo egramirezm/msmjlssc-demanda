@@ -16,4 +16,6 @@ public interface AntecedentesService {
 
 	List<MjltAsuntoActorDto> getDetalleActor();
 
+	MjltAsuntoActorDto getDetalleActorByCveAsutoActor(Integer cveAsutoActor);
+
 }

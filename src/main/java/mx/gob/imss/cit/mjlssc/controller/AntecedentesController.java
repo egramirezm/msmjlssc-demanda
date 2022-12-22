@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,6 +46,24 @@ public class AntecedentesController {
 			}
 		} catch (Exception e) {
 			ResponseDataDTO<List<MjltAsuntoActorDto>> response = new ResponseDataDTO<>(Constantes.STATUS_500, Constantes.INTERNAL_SERVER_ERROR.concat(e.toString()), null);
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/detalleActor/{cveAsutoActor}")
+	public ResponseEntity<?> getDetalleActorByCveAsutoActor(@PathVariable Integer cveAsutoActor) {
+		log.info("--->> getDetalleActorByCveAsutoActor::cveAsutoActor:{}", cveAsutoActor );
+		try {
+			MjltAsuntoActorDto result = antecedentesService.getDetalleActorByCveAsutoActor(cveAsutoActor);
+			if(result instanceof MjltAsuntoActorDto) {
+				ResponseDataDTO<MjltAsuntoActorDto> response = new ResponseDataDTO<>(Constantes.STATUS_200, Constantes.OK, result);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}else {
+				ResponseDataDTO<MjltAsuntoActorDto> response = new ResponseDataDTO<>(Constantes.STATUS_204, Constantes.NO_CONTENT, result);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			ResponseDataDTO<MjltAsuntoActorDto> response = new ResponseDataDTO<>(Constantes.STATUS_500, Constantes.INTERNAL_SERVER_ERROR.concat(e.toString()), null);
 			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

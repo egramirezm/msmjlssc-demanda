@@ -5,6 +5,7 @@ package mx.gob.imss.cit.mjlssc.service.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,22 @@ public class AntecedentesServiceImpl implements AntecedentesService {
 			log.error(e.getMessage());
 		}
 		return  Collections.emptyList();
+	}
+
+	@Override
+	public MjltAsuntoActorDto getDetalleActorByCveAsutoActor(Integer cveAsuntoActor) {
+		log.info("Inicio getDetalleActorByCveAsutoActor");
+
+		try {
+			Optional<MjltAsuntoActor> dbo = mjltAsuntoActorRepository.findById(cveAsuntoActor);
+			log.info(dbo.toString());
+			if (dbo.isPresent()) {
+				return ObjectMapperUtils.map(dbo.get(), MjltAsuntoActorDto.class);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return  null;
 	}
 
 }
