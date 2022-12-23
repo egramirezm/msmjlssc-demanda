@@ -25,16 +25,16 @@ public class RepresentanteDto implements Serializable {
 	private String apPaterno;
 	private String apMaterno;
 	private String correoElectronico;
-	private String telefono;
+	private Integer telefono;
 	private String despacho;
 	//TODO: mapear el obejto de la entidad una vez que esten definidas
 //	private EstadoDto estado;
 //	private AlcaldiaMunicipioDto alcaldiaMunicipio;
 	private String calle;
 	private String colonia;
-	private String numExterior;
-	private String numInterior;
-	private String codigoPostal;
+	private Integer numExterior;
+	private Integer numInterior;
+	private Integer codigoPostal;
 	
 	
 	

@@ -1,6 +1,7 @@
 package mx.gob.imss.cit.mjlssc.model.request;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,8 @@ public class ConfIndiSeguSocRequestDto extends IdentityBaseModel<Long> implement
 	private String colonia;
 	private String numExterior;
 	private String numInterior;
-	private String codigoPostal;
-	private String fechaNacimiento;
+	private Integer codigoPostal;
+	private Date fechaNacimiento;
 	private String documentoAdjunto;
 	private String pericialMedica;
 
