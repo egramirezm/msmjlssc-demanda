@@ -16,7 +16,7 @@ public class DemandaRequestDto extends IdentityBaseModel<Long> implements Serial
 	private static final long serialVersionUID = -854797975920272969L;
 
 	private Integer juntaId;
-	private String numeroExpediente;
+	private Integer numeroExpediente;
 	private Integer anioExpediente;
 
 }

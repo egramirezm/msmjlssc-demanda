@@ -1,11 +1,12 @@
 package mx.gob.imss.cit.mjlssc.model.request;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mx.gob.imss.cit.mjlssc.model.entity.SsccEstadoDto;
+import mx.gob.imss.cit.mjlssc.model.entity.SsccMunicipioAlcaldiaDto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccDelegacion;
 
 /**
@@ -27,9 +28,8 @@ public class RepresentanteDto implements Serializable {
 	private String correoElectronico;
 	private String telefono;
 	private String despacho;
-	//TODO: mapear el obejto de la entidad una vez que esten definidas
-//	private EstadoDto estado;
-//	private AlcaldiaMunicipioDto alcaldiaMunicipio;
+	private SsccEstadoDto estado;
+	private SsccMunicipioAlcaldiaDto alcaldiaMunicipio;
 	private String calle;
 	private String colonia;
 	private String numExterior;

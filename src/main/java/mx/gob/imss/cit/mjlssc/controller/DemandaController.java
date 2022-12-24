@@ -21,7 +21,7 @@ import mx.gob.imss.cit.mjlssc.service.DemandaService;
  */
 @Log4j2
 @RestController
-@RequestMapping("")
+@RequestMapping("/demanda")
 public class DemandaController {
 
 	@Autowired
