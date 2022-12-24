@@ -20,7 +20,7 @@ public class AbogadoResponsableDto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 128052803305186026L;
-	private Long abogado;
+	private Integer abogado;
 	private Date fechaAsignacion;
 	
 }

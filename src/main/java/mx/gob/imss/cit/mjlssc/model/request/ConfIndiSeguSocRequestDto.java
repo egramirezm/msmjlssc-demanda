@@ -1,6 +1,7 @@
 package mx.gob.imss.cit.mjlssc.model.request;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class ConfIndiSeguSocRequestDto extends IdentityBaseModel<Long> implement
 	 */
 	private static final long serialVersionUID = -854797975920272969L;
 
-	private Integer ultimmoPatron;
+	private String ultimmoPatron;
 	private String estado;
 	private String alcaldiaMunicipio;
 	private String calle;
@@ -23,8 +24,8 @@ public class ConfIndiSeguSocRequestDto extends IdentityBaseModel<Long> implement
 	private String numExterior;
 	private String numInterior;
 	private String codigoPostal;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
 	private String documentoAdjunto;
-	private String pericialMedica;
+	private Boolean pericialMedica;
 
 }

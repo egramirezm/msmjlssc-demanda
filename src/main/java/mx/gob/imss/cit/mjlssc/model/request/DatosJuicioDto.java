@@ -24,7 +24,7 @@ public class DatosJuicioDto implements Serializable {
 	private Date fechaPresentacion;
 	private Date fechaNotificacion;
 	private Date fechaAudienciaInicial;
-	private String tipoTrascendencia;
+	private Integer tipoTrascendencia;
 	private String hora;
 
 }
