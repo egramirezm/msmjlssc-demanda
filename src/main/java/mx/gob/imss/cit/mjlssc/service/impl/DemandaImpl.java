@@ -16,7 +16,10 @@ import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsunto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsuntoActor;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccCentroConciliacion;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsccClaseActorAccionReclam;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccColoniaCp;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsccEstado;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsccMunicipioAlcaldia;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccSexo;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccTrascendencia;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccUmf;
@@ -83,7 +86,8 @@ public class DemandaImpl implements DemandaService {
 			mjltAsunto.setNumExpediente(demandaRequestDto.getCardDemanda().getNumeroExpediente());
 			mjltAsunto.setNumAnioExpediente(demandaRequestDto.getCardDemanda().getAnioExpediente());
 			mjltAsunto.setCveUsuarioAlta(demandaRequestDto.getCveUsuario());
-//			mjltAsunto.setIndReponeProcedimiento(demandaRequestDto.getCardDemanda().get); TODO: Validar si se persiste el ind_procede_incopetencia
+			mjltAsunto.setIndReponeProcedimiento(demandaRequestDto.getCardDemanda().getIndReponeProcedimiento());
+			
 			
 			//Actor Principal
 			MjltAsuntoActor mjltAsuntoActor = new MjltAsuntoActor();
@@ -96,36 +100,46 @@ public class DemandaImpl implements DemandaService {
 			mjltAsuntoActor.setRefNss(demandaRequestDto.getCardActorPrincipal().getAfiliacion());
 			mjltAsuntoActor.setRefCurp(demandaRequestDto.getCardActorPrincipal().getCurp());
 			mjltAsuntoActor.setRefRfc(demandaRequestDto.getCardActorPrincipal().getRfc());
+			mjltAsuntoActor.setIndActorPrincipal(demandaRequestDto.getCardActorPrincipal().getIndActorPrincipal());
 			
 			SsccSexo ssccSexo =  new SsccSexo();
-			ssccSexo.setId(null);
+			ssccSexo.setId(demandaRequestDto.getCardActorPrincipal().getGenero());
 			mjltAsuntoActor.setCveSexo(ssccSexo);
 			
 			mjltAsuntoActor.getCanSalarioBase();
 			
 			SsccUmf ssccUmf = new SsccUmf();
-			ssccUmf.setId(null);
+			ssccUmf.setId(demandaRequestDto.getCardActorPrincipal().getUfm());
 			mjltAsuntoActor.setCveUmf(ssccUmf);
 			
 			//Conflicto Individual de Seguridad Social
 			mjltAsunto.setRefCissUltimoPatron(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getUltimmoPatron());
-//			mjltAsunto.setRefCissUltimoPatron(null); TODO:falta estado
-//			mjltAsunto.setRefCissUltimoPatron(null);TODO:falta alcaldia Municipio
+			
+			SsccEstado ssccEstado = new SsccEstado();
+			ssccEstado.setId(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getEstado());
+			
+			SsccMunicipioAlcaldia ssccMunicipioAlcaldia = new SsccMunicipioAlcaldia();
+			ssccMunicipioAlcaldia.setCveEstado(ssccEstado);
+			
+			SsccColoniaCp ssccColoniaCp = new SsccColoniaCp();
+			ssccColoniaCp.setCveMunicipioAlcaldia(ssccMunicipioAlcaldia);
+			ssccColoniaCp.setRefCp(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getCodigoPostal());
+			
+			mjltAsunto.setRefCissDirCp(ssccColoniaCp);
 			mjltAsunto.setRefCissDirCalle(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getCalle());
-//			mjltAsunto.setRefCissDirCalle(null);TODO:colonia
 			mjltAsunto.setRefCissDirNumExt(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getNumExterior());
 			mjltAsunto.setRefCissDirNumInt(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getNumInterior());
 			
-			SsccColoniaCp ssccColoniaCp = new SsccColoniaCp();
-			ssccColoniaCp.setRefCp(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getCodigoPostal());
-			mjltAsunto.setRefCissDirCp(ssccColoniaCp);
 			mjltAsunto.setFecCissNacimiento(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getFechaNacimiento());
 //			mjltAsunto.setCveCissDocumentoPrueba(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getDocumentoAdjunto()); preguntar por la entidad de documento
 			mjltAsunto.setIndCissPericialMedica(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getPericialMedica());
 			//TODO://FINADO
 			
 			
-			//TODO://ACCIONES RECLAMADAS
+			//Acciones reclamadas
+			SsccClaseActorAccionReclam ssccClaseActorAccionReclam = new SsccClaseActorAccionReclam();
+			ssccClaseActorAccionReclam.setCveAccionReclamada(demandaRequestDto.getCardAccionesReclamadas().getAccionReclamado());
+			mjltAsunto.setCveClaseActorAccionReclam(ssccClaseActorAccionReclam);
 			
 			//Datos del juicio
 			mjltAsunto.setFecPresentacion(demandaRequestDto.getCardDatosJuicio().getFechaPresentacion());

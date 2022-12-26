@@ -23,8 +23,9 @@ public class PersonaRequestDto extends IdentityBaseModel<Long> implements Serial
 	private String afiliacion;
 	private String curp;
 	private String rfc;
-	private String genero;
-	private String ufm;
+	private Integer genero;
+	private Integer ufm;
 	private Integer salarioBase;
+	private Boolean indActorPrincipal;
 
 }

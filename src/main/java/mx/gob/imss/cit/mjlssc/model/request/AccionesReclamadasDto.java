@@ -21,7 +21,7 @@ public class AccionesReclamadasDto implements Serializable {
 	 */
 	private static final long serialVersionUID = 128052803305186026L;
 	
-	private String accionReclamado;
+	private Integer accionReclamado;
 	private String importeEstimado;
 
 }
