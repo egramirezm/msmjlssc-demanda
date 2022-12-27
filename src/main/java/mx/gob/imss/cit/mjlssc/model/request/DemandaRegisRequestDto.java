@@ -23,9 +23,12 @@ public class DemandaRegisRequestDto extends IdentityBaseModel<Long> implements S
 
 	
 	private Integer cveAsunto;
-	private String cveUsuario;
+	private Integer cveUsuario;
+	private Integer cveDelegacion;
+	private Integer cveTipoAsunto;
+	private Integer cveTipoAsuntoEtapaConfig;
 	private DemandaRequestDto cardDemanda;
-	private PersonaRequestDto cardActorPrincipal;
+	private ArrayList<PersonaRequestDto> cardActorPrincipal;
 	private ConfIndiSeguSocRequestDto cardConflictoIndividualSeguridadSocial;
 	private ArrayList<PersonaRequestDto> cardFinado;
 	private ArrayList<RepresentanteDto> cardRepresentante;

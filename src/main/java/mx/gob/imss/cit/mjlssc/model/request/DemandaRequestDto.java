@@ -18,6 +18,10 @@ public class DemandaRequestDto extends IdentityBaseModel<Long> implements Serial
 	private Integer juntaId;
 	private Integer numeroExpediente;
 	private Integer anioExpediente;
+	private Integer juntaIdRelac;
+	private Integer numeroExpedienteRelac;
+	private Integer anioExpedienteRelac;
 	private Boolean indReponeProcedimiento;
+	private Boolean indProcedeIncompetencia;
 
 }

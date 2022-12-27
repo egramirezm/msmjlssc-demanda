@@ -18,20 +18,17 @@ import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsuntoActor;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccCentroConciliacion;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccClaseActorAccionReclam;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccColoniaCp;
-import mx.gob.imss.cit.mjlssc.persistence.entity.SsccEstado;
-import mx.gob.imss.cit.mjlssc.persistence.entity.SsccMunicipioAlcaldia;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsccDelegacion;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccSexo;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsccTipoAsunto;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsccTipoAsuntoEtapaConfig;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccTrascendencia;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccUmf;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccUsuario;
+import mx.gob.imss.cit.mjlssc.persistence.entity.SsctRepresentante;
 import mx.gob.imss.cit.mjlssc.persistence.repository.MjltAsuntoActorRepository;
-import mx.gob.imss.cit.mjlssc.service.AccionesReclamadasService;
-import mx.gob.imss.cit.mjlssc.service.ActorPrincipalService;
-import mx.gob.imss.cit.mjlssc.service.ConflictoIndividualSeguridadSocialService;
-import mx.gob.imss.cit.mjlssc.service.DatosJuicioService;
+import mx.gob.imss.cit.mjlssc.persistence.repository.MjltAsuntoRepository;
 import mx.gob.imss.cit.mjlssc.service.DemandaService;
-import mx.gob.imss.cit.mjlssc.service.FinadoService;
-import mx.gob.imss.cit.mjlssc.service.RepresentanteService;
 import mx.gob.imss.cit.mjlssc.utils.ObjectMapperUtils;
 
 /**
@@ -43,25 +40,11 @@ import mx.gob.imss.cit.mjlssc.utils.ObjectMapperUtils;
 public class DemandaImpl implements DemandaService {
 
 	@Autowired
-	private ActorPrincipalService actorPrincipalService;
-
-	@Autowired
-	private ConflictoIndividualSeguridadSocialService conflictoIndividualSeguridadSocialService;
-	
-	@Autowired
-	private FinadoService finadoService;
-	
-	@Autowired
-	private RepresentanteService representanteService;
-	
-	@Autowired
-	private AccionesReclamadasService accionesReclamadasService; 
-	
-	@Autowired
-	private DatosJuicioService datosJuicioService;
-
-	@Autowired
 	private MjltAsuntoActorRepository mjltAsuntoActorRepository;
+	
+	@Autowired
+	private MjltAsuntoRepository mjltAsuntoRepository;
+	
 
 	/*
 	 * solo es prueba, revisar y definir uso de mappers y demas
@@ -73,57 +56,48 @@ public class DemandaImpl implements DemandaService {
 	@Transactional
 	public ResponseEntity<?> save(DemandaRegisRequestDto demandaRequestDto) {
 		log.info("Inicio DelegacionService getDelegaciones");
-
+		MjltAsunto mjltAsunto = new MjltAsunto();
 		try {
-			MjltAsunto mjltAsunto = new MjltAsunto();
-			mjltAsunto.setId(demandaRequestDto.getCveAsunto());
 			
+			//Generales
+			SsccDelegacion ssccDelegacion = new SsccDelegacion();
+			ssccDelegacion.setId(demandaRequestDto.getCveDelegacion());
+			mjltAsunto.setCveDelegacion(ssccDelegacion);
+			
+			SsccTipoAsunto ssccTipoAsunto = new SsccTipoAsunto();
+			ssccTipoAsunto.setId(demandaRequestDto.getCveTipoAsunto());
+			mjltAsunto.setCveTipoAsunto(ssccTipoAsunto);
+			
+			mjltAsunto.setCveUsuarioAlta(String.valueOf(demandaRequestDto.getCveUsuario()));
+			
+			SsccTipoAsuntoEtapaConfig ssccTipoAsuntoEtapaConfig = new SsccTipoAsuntoEtapaConfig();
+			ssccTipoAsuntoEtapaConfig.setId(demandaRequestDto.getCveTipoAsuntoEtapaConfig());
+			mjltAsunto.setCveTipoAsuntoEtapaConfig(ssccTipoAsuntoEtapaConfig);
 			
 			//Demanda
-			SsccCentroConciliacion ssccCentroConciliacion = new SsccCentroConciliacion();
+			SsccCentroConciliacion ssccCentroConciliacion = new SsccCentroConciliacion();			
 			ssccCentroConciliacion.setId(demandaRequestDto.getCardDemanda().getJuntaId());
 			mjltAsunto.setCveJuntaConciliacion(ssccCentroConciliacion);
 			mjltAsunto.setNumExpediente(demandaRequestDto.getCardDemanda().getNumeroExpediente());
 			mjltAsunto.setNumAnioExpediente(demandaRequestDto.getCardDemanda().getAnioExpediente());
-			mjltAsunto.setCveUsuarioAlta(demandaRequestDto.getCveUsuario());
+			mjltAsunto.setCveJuntaConcDemandaRelac(ssccCentroConciliacion);//TODO:Revisar si es el dato correcto el que se envia aqui
+			mjltAsunto.setNumAnioExpDemandaRelac(demandaRequestDto.getCardDemanda().getAnioExpedienteRelac());
+			mjltAsunto.setNumExpDemandaRelac(demandaRequestDto.getCardDemanda().getNumeroExpedienteRelac());
 			mjltAsunto.setIndReponeProcedimiento(demandaRequestDto.getCardDemanda().getIndReponeProcedimiento());
+			mjltAsunto.setIndProcedeIncompetencia(demandaRequestDto.getCardDemanda().getIndProcedeIncompetencia());
 			
-			
-			//Actor Principal
-			MjltAsuntoActor mjltAsuntoActor = new MjltAsuntoActor();
-			mjltAsuntoActor.setCveAsunto(mjltAsunto);
-			mjltAsuntoActor.setCveUsuarioAlta(demandaRequestDto.getCveUsuario());
-			mjltAsuntoActor.setRefNombre(demandaRequestDto.getCardActorPrincipal().getNombre());
-			mjltAsuntoActor.setRefPaterno(demandaRequestDto.getCardActorPrincipal().getApMaterno());
-			mjltAsuntoActor.setRefMaterno(demandaRequestDto.getCardActorPrincipal().getApMaterno());
-			mjltAsuntoActor.setRefMatricula(demandaRequestDto.getCardActorPrincipal().getMatricula());
-			mjltAsuntoActor.setRefNss(demandaRequestDto.getCardActorPrincipal().getAfiliacion());
-			mjltAsuntoActor.setRefCurp(demandaRequestDto.getCardActorPrincipal().getCurp());
-			mjltAsuntoActor.setRefRfc(demandaRequestDto.getCardActorPrincipal().getRfc());
-			mjltAsuntoActor.setIndActorPrincipal(demandaRequestDto.getCardActorPrincipal().getIndActorPrincipal());
-			
-			SsccSexo ssccSexo =  new SsccSexo();
-			ssccSexo.setId(demandaRequestDto.getCardActorPrincipal().getGenero());
-			mjltAsuntoActor.setCveSexo(ssccSexo);
-			
-			mjltAsuntoActor.getCanSalarioBase();
-			
-			SsccUmf ssccUmf = new SsccUmf();
-			ssccUmf.setId(demandaRequestDto.getCardActorPrincipal().getUfm());
-			mjltAsuntoActor.setCveUmf(ssccUmf);
 			
 			//Conflicto Individual de Seguridad Social
-			mjltAsunto.setRefCissUltimoPatron(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getUltimmoPatron());
+			mjltAsunto.setRefCissUltimoPatron(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getUltimoPatron());
 			
-			SsccEstado ssccEstado = new SsccEstado();
-			ssccEstado.setId(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getEstado());
-			
-			SsccMunicipioAlcaldia ssccMunicipioAlcaldia = new SsccMunicipioAlcaldia();
-			ssccMunicipioAlcaldia.setCveEstado(ssccEstado);
-			
+//			SsccEstado ssccEstado = new SsccEstado();
+//			ssccEstado.setId(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getEstado());
+//			
+//			SsccMunicipioAlcaldia ssccMunicipioAlcaldia = new SsccMunicipioAlcaldia();
+//			ssccMunicipioAlcaldia.setCveEstado(ssccEstado);
+//			
 			SsccColoniaCp ssccColoniaCp = new SsccColoniaCp();
-			ssccColoniaCp.setCveMunicipioAlcaldia(ssccMunicipioAlcaldia);
-			ssccColoniaCp.setRefCp(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getCodigoPostal());
+			ssccColoniaCp.setId(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getColonia());
 			
 			mjltAsunto.setRefCissDirCp(ssccColoniaCp);
 			mjltAsunto.setRefCissDirCalle(demandaRequestDto.getCardConflictoIndividualSeguridadSocial().getCalle());
@@ -136,10 +110,14 @@ public class DemandaImpl implements DemandaService {
 			//TODO://FINADO
 			
 			
+//			//Representante
+			SsctRepresentante ssctRepresentante = new SsctRepresentante();
+			ssctRepresentante.setId(demandaRequestDto.getCardRepresentante().get(0).getNombreId());
+			
+			
 			//Acciones reclamadas
 			SsccClaseActorAccionReclam ssccClaseActorAccionReclam = new SsccClaseActorAccionReclam();
-			ssccClaseActorAccionReclam.setCveAccionReclamada(demandaRequestDto.getCardAccionesReclamadas().getAccionReclamado());
-			mjltAsunto.setCveClaseActorAccionReclam(ssccClaseActorAccionReclam);
+			ssccClaseActorAccionReclam.setId(demandaRequestDto.getCardAccionesReclamadas().getAccionReclamado());
 			
 			//Datos del juicio
 			mjltAsunto.setFecPresentacion(demandaRequestDto.getCardDatosJuicio().getFechaPresentacion());
@@ -151,42 +129,45 @@ public class DemandaImpl implements DemandaService {
 			mjltAsunto.setCveTrascendencia(ssccTrascendencia);
 			mjltAsunto.setStpAudienciaInicial(demandaRequestDto.getCardDatosJuicio().getFechaAudienciaInicial());
 			
-			//Abogado Responsable
+			//Usuario
 			SsccUsuario ssccUsuario = new  SsccUsuario();
-			ssccUsuario.setId(demandaRequestDto.getCardAbogadoResponsable().getAbogado());
-			mjltAsunto.setCveUsuarioAbogadoResponsable(ssccUsuario);
+			ssccUsuario.setId(demandaRequestDto.getCveUsuario());
+			mjltAsunto.setCveUsuario(ssccUsuario);
 			mjltAsunto.setFecAsignacion(demandaRequestDto.getCardAbogadoResponsable().getFechaAsignacion());
 			
+			MjltAsunto mjltAsuntoDBO = Try.of(() -> ObjectMapperUtils.map(mjltAsunto, MjltAsunto.class)).map(mjltAsuntoRepository::save).onFailure(exc -> log.error("Cannot insert or update record", exc)).get();
+			
+			//Actor Principal
+			MjltAsuntoActor mjltAsuntoActor = new MjltAsuntoActor();
+			mjltAsuntoActor.setCveAsunto(mjltAsuntoDBO);
+			mjltAsuntoActor.setCveUsuarioAlta(String.valueOf(demandaRequestDto.getCveUsuario()));
+			mjltAsuntoActor.setRefNombre(demandaRequestDto.getCardActorPrincipal().get(0).getNombre());
+			mjltAsuntoActor.setRefPaterno(demandaRequestDto.getCardActorPrincipal().get(0).getApPaterno());
+			mjltAsuntoActor.setRefMaterno(demandaRequestDto.getCardActorPrincipal().get(0).getApMaterno());
+			mjltAsuntoActor.setRefMatricula(demandaRequestDto.getCardActorPrincipal().get(0).getMatricula());
+			mjltAsuntoActor.setRefNss(demandaRequestDto.getCardActorPrincipal().get(0).getAfiliacion());
+			mjltAsuntoActor.setRefCurp(demandaRequestDto.getCardActorPrincipal().get(0).getCurp());
+			mjltAsuntoActor.setRefRfc(demandaRequestDto.getCardActorPrincipal().get(0).getRfc());
+			mjltAsuntoActor.setIndActorPrincipal(demandaRequestDto.getCardActorPrincipal().get(0).getIndActorPrincipal());
+			
+			SsccSexo ssccSexo =  new SsccSexo();
+			ssccSexo.setId(demandaRequestDto.getCardActorPrincipal().get(0).getGenero());
+			mjltAsuntoActor.setCveSexo(ssccSexo);
+			
+			mjltAsuntoActor.getCanSalarioBase();
+			
+			SsccUmf ssccUmf = new SsccUmf();
+			ssccUmf.setId(demandaRequestDto.getCardActorPrincipal().get(0).getUfm());
+			mjltAsuntoActor.setCveUmf(ssccUmf);
 
-
-			MjltAsuntoActor dbo = Try.of(() -> ObjectMapperUtils.map(demandaRequestDto, MjltAsuntoActor.class)).map(mjltAsuntoActorRepository::save).onFailure(exc -> log.error("Cannot insert or update record", exc)).get();
+			MjltAsuntoActor mjltAsuntoActorDBO = Try.of(() -> ObjectMapperUtils.map(mjltAsuntoActor, MjltAsuntoActor.class)).map(mjltAsuntoActorRepository::save).onFailure(exc -> log.error("Cannot insert or update record", exc)).get();
+			log.info("RESPONSE:{}", mjltAsuntoActorDBO);
 			
-			log.info("NOTA REPOSITORY DEMANDA " + demandaRequestDto.getCardDemanda());
-			actorPrincipalService.save(demandaRequestDto.getCardActorPrincipal());
-			
-			conflictoIndividualSeguridadSocialService.save(demandaRequestDto.getCardConflictoIndividualSeguridadSocial());
-			
-			finadoService.save(demandaRequestDto.getCardFinado());
-			
-			representanteService.save(demandaRequestDto.getCardRepresentante());
-			
-			accionesReclamadasService.save(demandaRequestDto.getCardAccionesReclamadas());
-			
-			datosJuicioService.save(demandaRequestDto.getCardDatosJuicio());
-
-			// ejemplo projection
-			// SsccDelegacionView delegacionProjection =
-			// ssccDelegacionRepository.findByRefAbreviacion("DFS",SsccDelegacionView.class);
-//			DatosJuicioDto datosJuicio = ssccDelegacionRepository.findAll();
-			// delegacionDtos =
-			// ObjectMapperUtils.mapAll(delegaciones,SsccDelegacionDto.class);
-//			delegacionDtos = delegacionMapper.toLstDto(delegaciones);
 		} catch (Exception e) {
 			log.error("Exception DatosJuicioImpl saveDatosJuicio", e);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-//		return new ResponseEntity<>(datosJuicio, HttpStatus.OK);
-		return null;
+		return new ResponseEntity<>(mjltAsunto, HttpStatus.OK);
 	}
 
 }

@@ -21,7 +21,7 @@ public class RepresentanteDto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 128052803305186026L;
-	private Long nombreId;
+	private Integer nombreId;
 	private String nombre;
 	private String apPaterno;
 	private String apMaterno;
@@ -31,7 +31,7 @@ public class RepresentanteDto implements Serializable {
 	private SsccEstadoDto estado;
 	private SsccMunicipioAlcaldiaDto alcaldiaMunicipio;
 	private String calle;
-	private String colonia;
+	private Integer colonia;
 	private String numExterior;
 	private String numInterior;
 	private String codigoPostal;
