@@ -83,7 +83,7 @@ spring:
     #username: MAISSCBD_USER
     #password: M55ACBDI_U534
     username: root
-    password: admin
+    password: root
     driverClassName: org.mariadb.jdbc.Driver
   jpa:
     properties:
