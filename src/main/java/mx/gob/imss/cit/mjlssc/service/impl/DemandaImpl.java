@@ -3,6 +3,9 @@
  */
 package mx.gob.imss.cit.mjlssc.service.impl;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import io.vavr.control.Try;
 import lombok.extern.log4j.Log4j2;
+import mx.gob.imss.cit.mjlssc.model.entity.MjltAsuntoDto;
 import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsunto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsuntoActor;
@@ -168,6 +172,17 @@ public class DemandaImpl implements DemandaService {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(mjltAsunto, HttpStatus.OK);
+	}
+
+
+	@Override
+	public List<MjltAsuntoDto> getDemanda(Integer numExpediente, Integer numAnioExpediente) {
+		log.info("Inicio getDemanda");
+			List<MjltAsunto> dboList = mjltAsuntoRepository.findByNumExpedienteAndNumAnioExpediente(numExpediente, numAnioExpediente);
+			if(!dboList.isEmpty()) {
+				return ObjectMapperUtils.mapAll(dboList, MjltAsuntoDto.class);
+			}
+			return Collections.emptyList();
 	}
 
 }
