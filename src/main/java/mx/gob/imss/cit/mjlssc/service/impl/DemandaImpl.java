@@ -5,6 +5,7 @@ package mx.gob.imss.cit.mjlssc.service.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +20,7 @@ import lombok.extern.log4j.Log4j2;
 import mx.gob.imss.cit.mjlssc.model.entity.MjltAsuntoDto;
 import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
 import mx.gob.imss.cit.mjlssc.model.request.PersonaRequestDto;
+import mx.gob.imss.cit.mjlssc.model.request.ValidaDemandaResponseDto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsunto;
 import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsuntoActor;
 import mx.gob.imss.cit.mjlssc.persistence.entity.SsccCentroConciliacion;
@@ -280,6 +282,39 @@ public class DemandaImpl implements DemandaService {
 				return ObjectMapperUtils.mapAll(dboList, MjltAsuntoDto.class);
 			}
 			return Collections.emptyList();
+	}
+
+
+	@Override
+	public ValidaDemandaResponseDto validaDemanda(Integer numExpediente, Integer anioExpediente, Integer cveJunta,
+			Boolean indProcedeIncompetencia) {
+		log.info("Inicio validaDemanda");
+		ValidaDemandaResponseDto response=new ValidaDemandaResponseDto();
+	Optional<MjltAsunto> asuntoOp = mjltAsuntoRepository.findByNumExpedienteAndNumAnioExpedienteAndCveJuntaConciliacionId(numExpediente, anioExpediente,cveJunta);
+		if(asuntoOp.isPresent()) {
+			
+			log.info("Se encontro la demanda");
+			MjltAsunto asunto=	asuntoOp.get();
+			
+			if(indProcedeIncompetencia ==true &&  (asunto.getIndProcedeIncompetencia()!=null  && asunto.getIndProcedeIncompetencia()==false) || (asunto.getIndProcedeIncompetencia()==null) ) {
+				response.setMensaje("Otra jefatura tiene asignado el expediente ");
+				log.info("procede de una incompetencia pero otra jefatura lo tiene asignado");
+				
+			}else if(indProcedeIncompetencia ==true &&  (asunto.getIndProcedeIncompetencia()!=null  && asunto.getIndProcedeIncompetencia()==true) ) {
+	
+				log.info("procede de una incompetencia sin que lo tenga una jefatura");
+				MjltAsuntoDto asuntoDTO=new MjltAsuntoDto();
+				ObjectMapperUtils.map(asunto,asuntoDTO);
+				response.setDemanda(asuntoDTO);
+				
+			}else {
+				log.info(" no procede de una incompetencia");
+				MjltAsuntoDto asuntoDTO=new MjltAsuntoDto();
+				ObjectMapperUtils.map(asunto,asuntoDTO);
+				response.setDemanda(asuntoDTO);
+			}
+		}
+		return response;
 	}
 
 }
