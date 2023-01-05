@@ -15,17 +15,16 @@ public class ConfIndiSeguSocRequestDto extends IdentityBaseModel<Long> implement
 	 * 
 	 */
 	private static final long serialVersionUID = -854797975920272969L;
-
-	private Integer ultimmoPatron;
-	private String estado;
-	private String alcaldiaMunicipio;
+	private String ultimoPatron;
+	private Integer estado;
+	private Integer alcaldiaMunicipio;
 	private String calle;
-	private String colonia;
+	private Integer colonia;
 	private String numExterior;
 	private String numInterior;
-	private Integer codigoPostal;
+	private String codigoPostal;
 	private Date fechaNacimiento;
 	private String documentoAdjunto;
-	private String pericialMedica;
+	private Boolean pericialMedica;
 
 }
