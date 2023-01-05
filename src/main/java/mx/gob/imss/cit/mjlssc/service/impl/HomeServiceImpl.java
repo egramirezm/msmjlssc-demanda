@@ -3,21 +3,18 @@
  */
 package mx.gob.imss.cit.mjlssc.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
-import mx.gob.imss.cit.mjlssc.model.entity.MjltAsuntoActorDto;
-import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsuntoActor;
-import mx.gob.imss.cit.mjlssc.persistence.repository.MjltAsuntoActorRepository;
+import mx.gob.imss.cit.mjlssc.model.response.HomeJuicioLaboralResponseDto;
+import mx.gob.imss.cit.mjlssc.persistence.repository.HomeJuicioLaboralRepository;
 import mx.gob.imss.cit.mjlssc.service.HomeService;
-import mx.gob.imss.cit.mjlssc.utils.ObjectMapperUtils;
+import mx.gob.imss.cit.nmlssc.support.model.PageModel;
 
 /**
  * @author
@@ -28,20 +25,22 @@ import mx.gob.imss.cit.mjlssc.utils.ObjectMapperUtils;
 public class HomeServiceImpl implements HomeService {
 
 	@Autowired
-	private MjltAsuntoActorRepository mjltAsuntoActorRepository;
+	private HomeJuicioLaboralRepository homeJuicioLaboralRepository;
+
+	@Value("${nml.schema}")
+	private String esquemaNml;
 
 	@Override
 	public Object getHomeJuicioLaboral(String nombre, Integer folio, Integer anio, Integer cveEdoProcesal,Pageable pageable) {
-		log.info("Inicio home juicoLaboral");
-		Page<MjltAsuntoActor> actores = null;
-		List<MjltAsuntoActorDto> actoresDto = new ArrayList<>();
+		log.info("Inicio home juico Laboral");
+		PageModel<HomeJuicioLaboralResponseDto> home = null;
 		try {
-			actores = mjltAsuntoActorRepository.findAsuntoActorHome(nombre, folio, anio, cveEdoProcesal, pageable);
-			actoresDto = ObjectMapperUtils.mapAll(actores.getContent(), MjltAsuntoActorDto.class);
+			home = homeJuicioLaboralRepository.getHomeJuicoLaboral(nombre, folio, anio, cveEdoProcesal, esquemaNml,pageable);
 		} catch (Exception e) {
 			log.error("error getHomeJuicioLaboral", e);
+			new ResponseEntity<>(home, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new PageImpl<>(actoresDto, pageable, actores.getTotalElements());
+		return home;
 	}
 
 }

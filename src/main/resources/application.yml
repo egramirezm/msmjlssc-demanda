@@ -141,4 +141,4 @@ management:
     git:
       mode: full
 nml:
-  schema: NMLSSCBDQA01
+  schema: nmldb
