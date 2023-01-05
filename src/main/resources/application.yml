@@ -48,7 +48,7 @@ logging:
 management:
   endpoints:
     web:
-      base-path: /msbase-manager/actuator
+      base-path: /msmjlssc-demanda/actuator
       exposure:
         include: health, info, env, beans, metrics, threaddump, vigencia, genericEndPoints
   endpoint:
@@ -83,7 +83,7 @@ spring:
     #username: MAISSCBD_USER
     #password: M55ACBDI_U534
     username: root
-    password: admin
+    password: root
     driverClassName: org.mariadb.jdbc.Driver
   jpa:
     properties:
@@ -122,7 +122,7 @@ logging:
 management:
   endpoints:
     web:
-      base-path: /msbase-manager/actuator
+      base-path: /msmjlssc-demanda/actuator
       exposure:
         include: health, info, env, beans, metrics, threaddump, vigencia, genericEndPoints
   endpoint:
@@ -141,4 +141,4 @@ management:
     git:
       mode: full
 nml:
-  schema: NMLSSCBDQA01
+  schema: nmldb

@@ -1,9 +1,25 @@
 package mx.gob.imss.cit.mjlssc.persistence.entity;
 
-import javax.persistence.*;
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "MJLT_ASUNTO")
@@ -127,13 +143,16 @@ public class MjltAsunto {
     @Column(name = "FEC_ASIGNACION")
     private Date fecAsignacion;
 
-    @NotNull
+    @CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_ALTA", nullable = false)
     private Date fecAlta;
 
     @Column(name = "FEC_BAJA")
     private Date fecBaja;
 
+    @UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_MODIFICA")
     private Date fecModifica;
 

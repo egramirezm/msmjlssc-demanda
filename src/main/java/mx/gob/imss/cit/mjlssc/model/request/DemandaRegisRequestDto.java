@@ -21,8 +21,14 @@ public class DemandaRegisRequestDto extends IdentityBaseModel<Long> implements S
 	 */
 	private static final long serialVersionUID = -854797975920272969L;
 
+	
+	private Integer cveAsunto;
+	private Integer cveUsuario;
+	private Integer cveDelegacion;
+	private Integer cveTipoAsunto;
+	private Integer cveTipoAsuntoEtapaConfig;
 	private DemandaRequestDto cardDemanda;
-	private PersonaRequestDto cardActorPrincipal;
+	private ArrayList<PersonaRequestDto> cardActorPrincipal;
 	private ConfIndiSeguSocRequestDto cardConflictoIndividualSeguridadSocial;
 	private ArrayList<PersonaRequestDto> cardFinado;
 	private ArrayList<RepresentanteDto> cardRepresentante;

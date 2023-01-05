@@ -3,9 +3,14 @@
  */
 package mx.gob.imss.cit.mjlssc.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
+import mx.gob.imss.cit.mjlssc.model.entity.MjltAsuntoDto;
 import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
+import mx.gob.imss.cit.mjlssc.model.request.ValidaDemandaResponseDto;
+import mx.gob.imss.cit.mjlssc.persistence.entity.MjltAsunto;
 
 /**
  * 
@@ -15,5 +20,8 @@ import mx.gob.imss.cit.mjlssc.model.request.DemandaRegisRequestDto;
 public interface DemandaService {
 
 	ResponseEntity<?> save(DemandaRegisRequestDto demandaRequestDto);
+
+	List<MjltAsuntoDto> getDemanda(Integer numExpediente, Integer anioExpediente);
+	ValidaDemandaResponseDto validaDemanda(Integer numExpediente, Integer anioExpediente,Integer cveJunta,Boolean indProcedeIncompetencia);
 
 }

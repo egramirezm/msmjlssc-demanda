@@ -3,6 +3,10 @@ package mx.gob.imss.cit.mjlssc.persistence.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -267,13 +271,16 @@ public class MjltAsuntoActor {
     @Column(name = "REF_WSP_DES_SUB_DELEGACION", length = 400)
     private String refWspDesSubDelegacion;
 
-    @NotNull
+    @CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_ALTA", nullable = false)
     private Date fecAlta;
 
     @Column(name = "FEC_BAJA")
     private Date fecBaja;
 
+    @UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FEC_MODIFICA")
     private Date fecModifica;
 
