@@ -20,18 +20,10 @@ public class HomeJuicioLaboralResponseDto extends BaseModel {
 	private Integer cveAsuntoActor;
 	private String numExpediente;
 	private Integer cveJunta;
+	private String junta;
 	private String actorPricipal;
 	private String siguienteActividad;
 	private Date actualizacion;
 	private BigInteger actores;
-
-//	private Integer cveEstadoProcesal;
-//	private String nomEstadoProcesal;
-//	private Integer cveEstadoProcesalSiguiente;
-//	private String nomEstadoProcesalSiguiente;
-//	private Integer cveJuzgado;
-//	private Integer numJuicioAmparo;
-//	private Integer numAnio;
-//	private Integer numFolio;
 
 }

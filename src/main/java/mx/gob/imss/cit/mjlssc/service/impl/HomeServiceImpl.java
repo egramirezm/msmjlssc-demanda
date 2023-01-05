@@ -38,7 +38,7 @@ public class HomeServiceImpl implements HomeService {
 			home = homeJuicioLaboralRepository.getHomeJuicoLaboral(nombre, folio, anio, cveEdoProcesal, esquemaNml,pageable);
 		} catch (Exception e) {
 			log.error("error getHomeJuicioLaboral", e);
-			new ResponseEntity<>(home, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(home, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return home;
 	}
